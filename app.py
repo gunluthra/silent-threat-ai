@@ -41,6 +41,13 @@ else:
 
 st.progress(confidence)
 st.caption(f"🤖 AI Threat Confidence: {confidence}%")
+if time_diff >= 15:
+    st.error("🚨 Immediate Action: Notify Command Center")
+elif time_diff >= 5:
+    st.warning("⚠️ Status: Monitoring for escalation")
+else:
+    st.success("✅ Status: Area Secure")
+
 
 
 
