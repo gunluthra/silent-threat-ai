@@ -1,39 +1,63 @@
 import streamlit as st
 import time
+from datetime import datetime
 
-# Page config
 st.set_page_config(
     page_title="Silent Threat AI",
-    layout="centered"
+    layout="wide"
 )
 
-st.title("🛡 Silent Threat AI – Defence Surveillance System")
-st.caption("Behaviour-based Threat Detection")
-
-# Session state to track last activity
+# ------------------ STATE ------------------
 if "last_activity" not in st.session_state:
     st.session_state.last_activity = time.time()
 
-# Calculate inactivity time
-inactive_time = int(time.time() - st.session_state.last_activity)
+if "history" not in st.session_state:
+    st.session_state.history = []
 
-# Threat logic
-if inactive_time < 5:
-    threat = "GREEN"
-    message = "Normal activity detected"
-elif inactive_time < 15:
-    threat = "YELLOW"
-    message = "Suspicious delay in activity"
+# ------------------ FUNCTIONS ------------------
+def get_threat_level(last_time):
+    diff = int(time.time() - last_time)
+
+    if diff < 5:
+        return "GREEN", "Normal activity detected"
+    elif diff < 12:
+        return "YELLOW", "Suspicious inactivity detected"
+    else:
+        return "RED", "Silent threat detected"
+
+def log_event(level):
+    st.session_state.history.append(
+        f"{datetime.now().strftime('%H:%M:%S')} — {level}"
+    )
+
+# ------------------ UI ------------------
+st.title("🛡 Silent Threat AI – Defence Surveillance System")
+st.caption("Real-time Behavioural Anomaly Detection")
+
+level, reason = get_threat_level(st.session_state.last_activity)
+
+# ------------------ COLORS ------------------
+if level == "GREEN":
+    st.success(f"🟢 Threat Level: {level}\n\nReason: {reason}")
+elif level == "YELLOW":
+    st.warning(f"🟡 Threat Level: {level}\n\nReason: {reason}")
 else:
-    threat = "RED"
-    message = "Silent threat detected due to inactivity"
+    st.error(f"🔴 Threat Level: {level}\n\nReason: {reason}")
 
-# Display result
-st.subheader(f"Threat Level: {threat}")
-st.write(message)
-st.write(f"Last activity detected: {inactive_time} seconds ago")
+st.write(f"Last activity detected: **{int(time.time() - st.session_state.last_activity)} seconds ago**")
 
-# Button to simulate activity
+# ------------------ BUTTON ------------------
 if st.button("Simulate Activity"):
     st.session_state.last_activity = time.time()
+    log_event(level)
     st.success("Activity registered")
+
+# ------------------ HISTORY ------------------
+st.divider()
+st.subheader("📜 Alert History")
+
+if st.session_state.history:
+    for h in reversed(st.session_state.history):
+        st.write(h)
+else:
+    st.info("No alerts yet")
