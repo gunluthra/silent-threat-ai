@@ -6,6 +6,7 @@ from streamlit_autorefresh import st_autorefresh
 st.set_page_config(page_title="Silent Threat AI", layout="centered")
 
 
+
 st.title("🛡 Silent Threat AI – Defence Surveillance System")
 st.caption("Real-time Behavioural Anomaly Detection")
 
