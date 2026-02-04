@@ -7,7 +7,10 @@ st.set_page_config(page_title="Silent Threat AI", layout="centered")
 st.title("🛡 Silent Threat AI – Defence Surveillance System")
 st.caption("Real-time Behavioural Anomaly Detection")
 st_autorefresh(interval=2000, limit=None, key="refresh")
-
+zone = st.selectbox(
+    "📍 Surveillance Zone",
+    ["Border Post", "Military Base", "Ammunition Depot"]
+)
 
 if "last_activity" not in st.session_state:
     st.session_state.last_activity = time.time()
