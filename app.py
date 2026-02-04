@@ -32,6 +32,16 @@ else:
     st.write("Reason: Silent threat detected due to inactivity")
 
 st.write(f"⏱️ Last activity detected: {time_diff} seconds ago")
+if time_diff < 5:
+    confidence = 20
+elif time_diff < 15:
+    confidence = 60
+else:
+    confidence = 95
+
+st.progress(confidence)
+st.caption(f"🤖 AI Threat Confidence: {confidence}%")
+
 
 
 
