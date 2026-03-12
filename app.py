@@ -6,32 +6,8 @@ from ml_model import predict_threat
 import pandas as pd
 import numpy as np
 from streamlit_webrtc import webrtc_streamer
-import cv2
 
-st.set_page_config(page_title="Silent Threat AI", layout="centered") 
-st.markdown("""
-<style>
-
-.stApp {
-    background-color: #0e1117;
-    color: white;
-}
-
-h1, h2, h3 {
-    color: #00ffd5;
-}
-
-div[data-testid="stMetricValue"] {
-    color: #00ff9d;
-    font-weight: bold;
-}
-
-div[data-testid="stProgressBar"] > div > div {
-    background-color: #00ffd5;
-}
-
-</style>
-""", unsafe_allow_html=True)
+st.set_page_config(page_title="Silent Threat AI", layout="centered")
 
 # ----------------------------------------------------
 # TITLE
@@ -39,7 +15,8 @@ div[data-testid="stProgressBar"] > div > div {
 st.title("🛡 Silent Threat AI – Defence Surveillance System")
 st.caption("Real-time Behavioural Anomaly Detection")
 
-st_autorefresh(interval=5000, limit=None, key="refresh")
+# Auto refresh (only once)
+st_autorefresh(interval=4000, limit=None, key="refresh")
 
 # ----------------------------------------------------
 # SESSION STATE
@@ -102,7 +79,10 @@ st.write(f"⏱️ Last activity detected: {time_diff} seconds ago")
 
 st.progress(confidence)
 st.caption(f"🤖 AI Threat Confidence: {confidence}%")
-st_autorefresh(interval=5000, limit=None, key="refresh") 
+
+# ----------------------------------------------------
+# COMMAND CENTER PANEL
+# ----------------------------------------------------
 st.markdown("### 🛰 Command Center Status")
 
 col1, col2, col3 = st.columns(3)
@@ -156,9 +136,13 @@ st.markdown("---")
 st.subheader("📜 Alert History (Latest 5)")
 
 for entry in st.session_state.history[-5:][::-1]:
-    st.write(entry) 
-    st.markdown("---")
-st.subheader("📡 Threat Analysis Radar")
+    st.write(entry)
+
+# ----------------------------------------------------
+# THREAT ANALYSIS CHART
+# ----------------------------------------------------
+st.markdown("---")
+st.subheader("📡 Threat Analysis")
 
 radar_data = {
     "Inactivity": min(time_diff * 5, 100),
@@ -172,7 +156,7 @@ radar_df = pd.DataFrame.from_dict(radar_data, orient="index", columns=["Score"])
 st.bar_chart(radar_df)
 
 # ----------------------------------------------------
-# RISK ANALYTICS GRAPH
+# RISK TREND
 # ----------------------------------------------------
 if "risk_data" not in st.session_state:
     st.session_state.risk_data = []
@@ -185,7 +169,7 @@ st.subheader("📊 Live Risk Trend")
 st.line_chart(chart_data)
 
 # ----------------------------------------------------
-# ZONE THREAT OVERVIEW
+# ZONE OVERVIEW
 # ----------------------------------------------------
 zone_status = {
     "Border Post": np.random.randint(20,100),
