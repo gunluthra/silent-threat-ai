@@ -8,7 +8,30 @@ import numpy as np
 from streamlit_webrtc import webrtc_streamer
 import cv2
 
-st.set_page_config(page_title="Silent Threat AI", layout="centered")
+st.set_page_config(page_title="Silent Threat AI", layout="centered") 
+st.markdown("""
+<style>
+
+.stApp {
+    background-color: #0e1117;
+    color: white;
+}
+
+h1, h2, h3 {
+    color: #00ffd5;
+}
+
+div[data-testid="stMetricValue"] {
+    color: #00ff9d;
+    font-weight: bold;
+}
+
+div[data-testid="stProgressBar"] > div > div {
+    background-color: #00ffd5;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 # ----------------------------------------------------
 # TITLE
