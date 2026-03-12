@@ -133,7 +133,20 @@ st.markdown("---")
 st.subheader("📜 Alert History (Latest 5)")
 
 for entry in st.session_state.history[-5:][::-1]:
-    st.write(entry)
+    st.write(entry) 
+    st.markdown("---")
+st.subheader("📡 Threat Analysis Radar")
+
+radar_data = {
+    "Inactivity": min(time_diff * 5, 100),
+    "Zone Risk": zone_risk[zone],
+    "AI Confidence": confidence,
+    "System Escalation": risk_score % 100
+}
+
+radar_df = pd.DataFrame.from_dict(radar_data, orient="index", columns=["Score"])
+
+st.bar_chart(radar_df)
 
 # ----------------------------------------------------
 # RISK ANALYTICS GRAPH
