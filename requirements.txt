@@ -3,3 +3,6 @@ streamlit-autorefresh
 scikit-learn
 pandas
 numpy
+streamlit-webrtc
+opencv-python-headless
+av
