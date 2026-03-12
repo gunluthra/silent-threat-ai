@@ -36,16 +36,15 @@ if st.button("Simulate Activity"):
 time_diff = int(time.time() - st.session_state.last_activity)
 
 
-if time_diff < 5:
-    level = "GREEN"
+level = predict_threat(time_diff)
+
+if level == "GREEN":
     reason = "Normal activity detected"
     confidence = 20
-elif time_diff < 15:
-    level = "YELLOW"
+elif level == "YELLOW":
     reason = "Suspicious inactivity detected"
     confidence = 60
 else:
-    level = "RED"
     reason = "Silent threat detected due to inactivity"
     confidence = 95
 
