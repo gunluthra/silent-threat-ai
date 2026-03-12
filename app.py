@@ -16,7 +16,7 @@ st.set_page_config(page_title="Silent Threat AI", layout="centered")
 st.title("🛡 Silent Threat AI – Defence Surveillance System")
 st.caption("Real-time Behavioural Anomaly Detection")
 
-st_autorefresh(interval=2000, limit=None, key="refresh")
+st_autorefresh(interval=5000, limit=None, key="refresh")
 
 # ----------------------------------------------------
 # SESSION STATE
