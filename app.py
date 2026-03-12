@@ -79,6 +79,16 @@ st.write(f"⏱️ Last activity detected: {time_diff} seconds ago")
 
 st.progress(confidence)
 st.caption(f"🤖 AI Threat Confidence: {confidence}%")
+st_autorefresh(interval=5000, limit=None, key="refresh") 
+st.markdown("### 🛰 Command Center Status")
+
+col1, col2, col3 = st.columns(3)
+
+col1.metric("Threat Level", level)
+col2.metric("Zone", zone)
+col3.metric("Inactivity (sec)", time_diff)
+
+st.markdown("---")
 
 # ----------------------------------------------------
 # MULTI FACTOR RISK SCORE
