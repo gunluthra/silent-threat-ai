@@ -2,6 +2,7 @@ import streamlit as st
 import time
 from datetime import datetime
 from streamlit_autorefresh import st_autorefresh
+from ml_model import predict_threat
 
 st.set_page_config(page_title="Silent Threat AI", layout="centered")
 
